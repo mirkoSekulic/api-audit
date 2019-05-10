@@ -1,5 +1,6 @@
 package com.audit.apiaudit.modules.users.controller;
 
+import com.audit.apiaudit.modules.audit.annotation.ApiAudited;
 import com.audit.apiaudit.modules.users.dto.UserDTO;
 import com.audit.apiaudit.modules.users.filter.UserFilter;
 import com.audit.apiaudit.modules.users.mapper.UserMapper;
@@ -27,6 +28,7 @@ public class UserController {
     }
 
     @GetMapping
+    @ApiAudited
     @ApiOperation(value = "Get a page of user accounts..", nickname = "findAll")
     public ResponseEntity<Page<UserDTO>> list(Pageable pageable, UserFilter userFilter)
     {

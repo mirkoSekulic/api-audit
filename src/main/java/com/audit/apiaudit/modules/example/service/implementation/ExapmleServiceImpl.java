@@ -6,9 +6,12 @@ import com.audit.apiaudit.modules.example.repository.ExampleRepository;
 import com.audit.apiaudit.modules.example.service.ExampleService;
 import com.audit.apiaudit.modules.shared.error.exception.entity.EntityMustHaveIDException;
 import com.audit.apiaudit.modules.shared.error.exception.entity.NewEntityCannotHaveIDException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.Instant;
 
 @Service
 public class ExapmleServiceImpl implements ExampleService {
@@ -35,8 +38,11 @@ public class ExapmleServiceImpl implements ExampleService {
         if(example.getId()!= null) {
             throw new NewEntityCannotHaveIDException("Example");
         }
+        Example forInsert = new Example();
+        BeanUtils.copyProperties(example, forInsert);
+        forInsert.setCreatedDate(Instant.now());
 
-        return exampleRepository.save(example);
+        return exampleRepository.save(forInsert);
     }
 
     @Override
@@ -45,7 +51,12 @@ public class ExapmleServiceImpl implements ExampleService {
             throw new EntityMustHaveIDException("Example");
         }
 
-        return exampleRepository.save(example);
+        Example fromDb = findById(example.getId());
+        Example forUpdate = new Example();
+        BeanUtils.copyProperties(example, forUpdate);
+        forUpdate.setCreatedDate(fromDb.getCreatedDate());
+
+        return exampleRepository.save(forUpdate);
     }
 
     @Override

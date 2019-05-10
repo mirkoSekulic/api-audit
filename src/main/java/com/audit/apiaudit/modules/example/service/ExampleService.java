@@ -12,7 +12,7 @@ public interface ExampleService {
 
     Example update(Example example);
 
-    void     delete(Long id);
+    void delete(Long id);
 
     Example findById(Long id);
 }
