@@ -1,0 +1,38 @@
+
+spring:
+    application:
+        name: api-audit
+
+    profiles:
+        active: dev
+
+    jackson:
+        serialization.write_dates_as_timestamps: false
+
+    jpa:
+        open-in-view: false
+        hibernate:
+            ddl-auto: none
+            naming:
+                physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+                implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    mvc:
+        favicon:
+            enabled: false
+
+    liquibase:
+        change-log: 'classpath:db/liquibase/master.xml'
+
+    data:
+        web:
+            pageable:
+                 default-page-size: 10
+                 one-indexed-parameters: true
+
+jwt:
+    secret: iufb41UiD71uRrI1Xi5cpZyxbRNQ/k1NrN+TnwlFXvLWxSSmMqi0dAmCh605BaJTsua/3xSVv5di815xTko+P7Q== # MUST BE 64 BYTE BASE64 ENCODED STRING
+    expiration: 64800
+
+server:
+    servlet:
+        context-path: /api
